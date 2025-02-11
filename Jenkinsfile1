@@ -1,0 +1,100 @@
+pipeline {
+
+  agent any
+
+  options {
+    disableConcurrentBuilds()
+  }
+
+  environment {
+    CURRENT_DATE = ""
+    CURRENT_TIME = ""
+  }
+
+  stages {
+
+    stage("Clean Workspace") {
+      steps {
+        script {
+          cleanWs()
+        }
+      }
+    }
+
+    stage("Get Date and Time") {
+      steps {
+        script {
+            def now = new Date()
+            CURRENT_DATE = now.format("yyyy-MM-dd", TimeZone.getTimeZone("IST"))
+            CURRENT_TIME = now.format("HH-mm-ss", TimeZone.getTimeZone("IST"))
+        }
+      }
+    }
+
+    stage("GitHub Clone") {
+      steps {
+        script {
+                      git branch: "master", credentialsId: "BitbucketCredentials", url: "https://ManikyaBandaruAlgo@bitbucket.org/thesouledstore2023/algoshack.git"
+          
+        }
+      }
+    }
+
+    stage("Sanity Test") {
+      steps {
+        script {
+		dir ("Updated Sanity Suite") {
+                      sh """
+					  export MAVEN_OPTS="-Xmx8192m -Xms6144m"
+		              /opt/apache-maven-3.8.5/bin/mvn -B clean test -Dcucumber.filter.tags="${CucumberFilterTag}" -Dbasefolder.datetimepattern="${CURRENT_DATE}/${CURRENT_TIME}"
+            """
+          }
+        }
+      }
+
+      post {
+        always {
+          script 
+		  {
+            publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: "./Updated Sanity Suite/output/SparkReport ${CURRENT_DATE}/${CURRENT_TIME}/ExtentReports/SparkReport/", reportFiles: 'spark.html', reportName: 'SeleniumTestReport', reportTitles: 'SeleniumTestReport', useWrapperFileDirectly: true])
+          }
+		  
+        }
+      }
+    }
+  }
+  post {
+    always {
+      script 
+	  {
+	    sh """
+		  cp -rp "./Updated Sanity Suite/output/SparkReport ${CURRENT_DATE}/${CURRENT_TIME}/ExtentReports/SparkReport/spark.html" index.html
+		"""
+	      
+		  archiveArtifacts artifacts: "index.html"
+			
+emailext subject: "TSS $JOB_NAME - Build # $BUILD_NUMBER - ${currentBuild.currentResult}!", body: """Hi Team,
+    <br><br>
+    Please find the execution report in attachment for $JOB_NAME.
+
+    <br><br>
+    TSS Regression Test Result - Build # $BUILD_NUMBER - ${currentBuild.currentResult} $BUILD_URL
+    <br>
+    Thanks<br>
+		Algoshack Team""", attachmentsPattern: "spark.html", mimeType: "text/html", to: "sumit.kumar@thesouledstore.com"
+
+emailext subject: "TSS $JOB_NAME - Build # $BUILD_NUMBER - ${currentBuild.currentResult}!", body: """Hi Team,
+    <br><br>
+    Please find the execution report in attachment for $JOB_NAME.
+
+    <br><br>
+    TSS Regression Test Result - Build # $BUILD_NUMBER - ${currentBuild.currentResult} $BUILD_URL
+    <br>
+    Thanks<br>
+		Algoshack Team""", attachmentsPattern: "spark.html", mimeType: "text/html", to: "scm-app@thesouledstore.com"
+      }
+	  }
+  }
+}
+
+
