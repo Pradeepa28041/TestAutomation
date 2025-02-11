@@ -17,6 +17,12 @@ Then verify text Karnataka Bank logo in home page
 When I selected Existing bank Customer login in home page
 And I checked requirements in home page
 And I selected Proceed to create application in home page
+And I entered Customer ID in existing bank customer as '<Customer ID>'
+And I entered Captchaa1 in existing bank customer as '<Captchaa1>'
+And I checked Terms and conditions in existing bank customer
+And I selected Generate OTP1 in existing bank customer
+And I entered ENTER OTP1 in existing bank customer as '<ENTER OTP>'
+And I selected Verify OTP1 in existing bank customer
 
 
 Then '<page>' is displayed with '<content>'
