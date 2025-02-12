@@ -147,64 +147,64 @@ public class TestRunner {
 	    {
 	    	System.out.println(e);
 	    }
+	}}
 		
-		 try {
-	        // Setting the environment variable
-	        String setEnvCommand = "set TESTMO_TOKEN=testmo_api_eyJpdiI6InRUT3F0eHF3S0t3UDlTYlBZYVJtelE9PSIsInZhbHVlIjoiU0hHc0h5K29MNW9pRG1aYU1tUHpVY0xXOWRaeVl1cGRZSWp2a2RSNVZPbz0iLCJtYWMiOiJhZGRhMmE2ZmQyNzY5MjNjZmJlYjRhMjc5ZjBhYTA0MmQyNzRmN2E4YTQxMWY1NGY5OTkyNjU2MDg5ODIyZmJlIiwidGFnIjoiIn0=";
-	        ;
-	    
-	        String filePath = Hooks.lastModified+"/Testmoreport.xml";  // Replace with the actual file path
-	        String testmoCommand = String.format("testmo automation:run:submit --instance https://kbdemo.testmo.net --project-id 1 --name \"Test run %s\" --source \"frontend\" --results \"%s\"", generateTimestamp(), filePath);
+//		 try {
+//	        // Setting the environment variable
+//	        String setEnvCommand = "set TESTMO_TOKEN=testmo_api_eyJpdiI6InRUT3F0eHF3S0t3UDlTYlBZYVJtelE9PSIsInZhbHVlIjoiU0hHc0h5K29MNW9pRG1aYU1tUHpVY0xXOWRaeVl1cGRZSWp2a2RSNVZPbz0iLCJtYWMiOiJhZGRhMmE2ZmQyNzY5MjNjZmJlYjRhMjc5ZjBhYTA0MmQyNzRmN2E4YTQxMWY1NGY5OTkyNjU2MDg5ODIyZmJlIiwidGFnIjoiIn0=";
+//	        ;
+//	    
+//	        String filePath = Hooks.lastModified+"/Testmoreport.xml";  // Replace with the actual file path
+//	        String testmoCommand = String.format("testmo automation:run:submit --instance https://kbdemo.testmo.net --project-id 1 --name \"Test run %s\" --source \"frontend\" --results \"%s\"", generateTimestamp(), filePath);
+//
+//
+//	  
+//	        System.out.println("testmoCommand :" + testmoCommand);
+//
+//	        // Combine the commands into one
+//	        String combinedCommand = "cmd.exe /c \"" + setEnvCommand + " && " + testmoCommand + "\"";
+//
+//	        // Run the combined command
+//	        ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", combinedCommand);
+//	        Process process = processBuilder.start();
+//
+//	        // Capture the output and errors
+//	        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//	        BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+//
+//	        String line;
+//	        // Log the output from the command
+//	        while ((line = reader.readLine()) != null) {
+//	            LogMessage("Command Output: " + line);
+//	        }
+//
+//	        // Log the errors (if any)
+//	        while ((line = errorReader.readLine()) != null) {
+//	            LogMessage("Command Errors: " + line);
+//	        }
+//
+//	        // Wait for the process to finish
+//	        int exitCode = process.waitFor();
+//	        LogMessage("Process exited with code: " + exitCode);
+//
+//	    } catch (Exception ex) {
+//	        System.err.println("Error executing batch command: " + ex.getMessage());
+//	    }
+//	}
+//	
+//		 public static String generateTimestamp () {
+//	    // Get the current time and format it as YYYYMMDD_HHMMSS
+//	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//	    return sdf.format(new Date());
+//	}
+//
+//	 public static void LogMessage(String message) {
+//	    // You can replace this with any logging mechanism you use, e.g., Log4j, System.out, etc.
+//	    System.out.println(message);  // Example: print to console
+//		
+//	}
 
 
-	  
-	        System.out.println("testmoCommand :" + testmoCommand);
-
-	        // Combine the commands into one
-	        String combinedCommand = "cmd.exe /c \"" + setEnvCommand + " && " + testmoCommand + "\"";
-
-	        // Run the combined command
-	        ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", combinedCommand);
-	        Process process = processBuilder.start();
-
-	        // Capture the output and errors
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-	        BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
-	        String line;
-	        // Log the output from the command
-	        while ((line = reader.readLine()) != null) {
-	            LogMessage("Command Output: " + line);
-	        }
-
-	        // Log the errors (if any)
-	        while ((line = errorReader.readLine()) != null) {
-	            LogMessage("Command Errors: " + line);
-	        }
-
-	        // Wait for the process to finish
-	        int exitCode = process.waitFor();
-	        LogMessage("Process exited with code: " + exitCode);
-
-	    } catch (Exception ex) {
-	        System.err.println("Error executing batch command: " + ex.getMessage());
-	    }
-	}
-	
-		 public static String generateTimestamp () {
-	    // Get the current time and format it as YYYYMMDD_HHMMSS
-	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-	    return sdf.format(new Date());
-	}
-
-	 public static void LogMessage(String message) {
-	    // You can replace this with any logging mechanism you use, e.g., Log4j, System.out, etc.
-	    System.out.println(message);  // Example: print to console
-		
-	}
 
 
 
-	
-
-}
